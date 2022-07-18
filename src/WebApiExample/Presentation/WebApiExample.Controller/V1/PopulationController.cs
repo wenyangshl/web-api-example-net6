@@ -1,4 +1,5 @@
-﻿using WebApiExample.Application.Contract.Interfaces;
+﻿using Microsoft.AspNetCore.Authorization;
+using WebApiExample.Application.Contract.Interfaces;
 using WebApiExample.Domain.Entities.Population;
 
 namespace WebApiExample.Controller.V1;
@@ -12,9 +13,17 @@ public class PopulationController : BaseController
         => _populationService = populationService;
 
     [HttpGet("state")]
-    public IActionResult GetStatePopulation([FromQuery] string state)
+    public async Task<IActionResult> GetStatePopulation([FromQuery] string state)
     {
-        var population = _populationService.GetStatePopulation(state);
+        var population = await _populationService.GetStatePopulation(state);
+
+        return StatusCode(StatusCodes.Status200OK, population);
+    }
+
+    [HttpGet("all")]
+    public async Task<IActionResult> GetAllStatesPopulation()
+    {
+        var population = await _populationService.GetAllStatesPopulation();
 
         return StatusCode(StatusCodes.Status200OK, population);
     }

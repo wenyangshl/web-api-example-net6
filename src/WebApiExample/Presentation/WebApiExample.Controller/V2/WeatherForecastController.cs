@@ -1,6 +1,10 @@
-﻿namespace WebApiExample.Controller.V2;
+﻿using Microsoft.AspNetCore.Authorization;
+
+namespace WebApiExample.Controller.V2;
 
 [ExcludeFromCodeCoverage]
+[ApiVersion("2.0")]
+[Authorize]
 public class WeatherForecastController : BaseController
 {
     private static readonly string[] Summaries = new[]
@@ -14,8 +18,7 @@ public class WeatherForecastController : BaseController
     {
         _logger = logger;
     }
-
-    [ApiVersion("2.0")]
+    
     [HttpGet("weathers/today")]
     public IActionResult Get()
     {

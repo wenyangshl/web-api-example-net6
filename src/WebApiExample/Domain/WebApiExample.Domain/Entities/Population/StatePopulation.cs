@@ -17,5 +17,9 @@ namespace WebApiExample.Domain.Entities.Population
         
         [JsonProperty("Slug State")]
         public string StateSlug { get; set; }
+
+        public StatePopulation(string stateId, string state, int yearId, string year, long population, string stateSlug) =>
+            (StateId, State, YearId, Year, Population, StateSlug) =
+            (stateId, state, yearId, year, population, stateSlug);
     }
 }

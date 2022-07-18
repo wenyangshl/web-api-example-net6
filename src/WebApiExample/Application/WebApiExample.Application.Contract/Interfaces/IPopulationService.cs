@@ -4,6 +4,8 @@ namespace WebApiExample.Application.Contract.Interfaces
 {
     public interface IPopulationService
     {
-        StatePopulation? GetStatePopulation(string state);
+        Task<StatePopulation?> GetStatePopulation(string state);
+
+        Task<StatePopulation[]> GetAllStatesPopulation();
     }
 }

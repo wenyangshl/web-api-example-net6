@@ -11,14 +11,20 @@ namespace WebApiExample.Application
         public PopulationService(IPopulationRepository populationRepository)
             => _populationRepository = populationRepository;
 
-        public StatePopulation GetStatePopulation(string state)
+        public async Task<StatePopulation[]> GetAllStatesPopulation()
         {
-            string response = _populationRepository.GetStatePopulation();
-            JObject jobj = JObject.Parse(response);
+            string response = await _populationRepository.GetStatePopulation();
 
-            StatePopulation[] statePopulations = JsonConvert.DeserializeObject<StatePopulation[]>(jobj["data"].ToString());
+            StatePopulation[] statePopulations = JsonConvert.DeserializeObject<StatePopulation[]>(response) ?? new StatePopulation[] { };
 
-            return statePopulations.Where(p => p.StateSlug == state.ToLower()).FirstOrDefault();
+            return statePopulations;
+        }
+
+        public async Task<StatePopulation?> GetStatePopulation(string state)
+        {
+            StatePopulation[] statePopulations = await GetAllStatesPopulation();
+
+            return statePopulations is null ? null : statePopulations.Where(p => p.StateSlug == state.ToLower()).FirstOrDefault();
         }
     }
 }

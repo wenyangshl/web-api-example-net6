@@ -2,6 +2,6 @@
 {
     public interface IPopulationRepository
     {
-        string GetStatePopulation();
+        Task<string> GetStatePopulation();
     }
 }
